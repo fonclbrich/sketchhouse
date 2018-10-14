@@ -14,18 +14,27 @@ void GeometrySketcher::prologue()
 {
 	if (!didWall && !wallPieces.empty() )
 	{
+		cairo_set_source_rgb(paintbox->top(), 0,0,0);
+		cairo_set_source_rgb(paintbox->bottom(), 0,0,0);
+		cairo_set_source_rgb(paintbox->middle(), 0,0.8,0);
 		cairo_move_to(paintbox->top(), wallStart.x, wallStart.y);
+		cairo_move_to(paintbox->middle(), wallStart.x, wallStart.y);
+
+		Coordinates noChange = {0,0};
+		(**wallPieces.begin()).traceback(noChange, wallPieces.begin(), wallPieces.end());
+		(**wallPieces.begin()).tracebackP(noChange, wallPieces.begin(), wallPieces.end());
+		(**wallPieces.begin()).publish();
+
 
 		while (!wallPieces.empty())
 		{
-			WallSketcher *piece = *wallPieces.begin();
-			piece->publish();
-			delete piece;
+			delete *wallPieces.begin();
 			wallPieces.pop_front();
 		}
 
 		cairo_stroke(paintbox->top());
-
+		cairo_stroke(paintbox->bottom());
+		cairo_fill(paintbox->middle());
 	}
 	didWall = false;
 }
@@ -74,6 +83,7 @@ void GeometrySketcher::doAlign(xmlNode *node)
 	Alignment *alignment = new Alignment(paintbox);
 	alignment->sketch(node);
 	paintbox->stamp(alignment);
+	didWall = true;
 }
 
 void GeometrySketcher::sketch(xmlNode *node)

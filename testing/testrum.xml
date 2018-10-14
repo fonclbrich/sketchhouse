@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<house>
+<room>
+	<name>Schlafzimmer</name>
+	<geometry>
+		<align>sz01</align>
+		<wall>
+			<direction>south</direction>
+			<length>80</length>
+			<width>32</width>
+		</wall>
+		
+	</geometry>
+</room>
+
+
+<path>
+	<origin>sz01</origin>
+	<destination>wz01</destination>
+	<direction>north</direction>
+	<length>32</length>
+</path>
+
+</house>

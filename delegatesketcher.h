@@ -27,7 +27,6 @@ private:
 
 protected:
 	void addDelegate(string keyword, Delegate delegate);
-	int callCount;
 
 public:
 	DelegateSketcher(PaintBox *);

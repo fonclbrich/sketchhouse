@@ -23,7 +23,6 @@ void DelegateSketcher::epilogue()
 DelegateSketcher::DelegateSketcher(PaintBox *pb)
   : Sketcher(pb)
 {
-	callCount = 0;
 }
 
 void DelegateSketcher::addDelegate(string keyword, Delegate delegate)

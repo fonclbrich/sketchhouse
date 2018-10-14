@@ -24,24 +24,49 @@ void WallSketcher::sketch(xmlNode *node)
 
 void WallSketcher::publish()
 {
-	cairo_rel_line_to(paintbox->top(), x * length, y * length);
+	cairo_rel_line_to(paintbox->bottom(), -y * width, x * width);
+	cairo_rel_line_to(paintbox->middle(), -y * (width - 2), x * (width - 2));
 }
 
-Coordinates WallSketcher::traceback(cairo_t *outline, Coordinates forward, PieceList::iterator piece, PieceList::iterator passed)
+Coordinates WallSketcher::traceback(Coordinates forward, PieceList::iterator piece, PieceList::iterator passed)
 {
-	Coordinates c = {-y * width, x * width};
+	Coordinates c = {y * width, -x * width};
 
-	publish();
+	cairo_rel_line_to(paintbox->top(), x * length, y * length);
 
 	if (++piece != passed)
 	{
-		Coordinates backward = (*piece)->traceback(outline, c, piece, passed);
-		cairo_rel_line_to(outline, forward.x - backward.x - x * length, forward.y - backward.y - y * length);
+		Coordinates backward = (*piece)->traceback(c, piece, passed);
+		cairo_rel_line_to(paintbox->bottom(), forward.x - backward.x - x * length, forward.y - backward.y - y * length);
 	}
 	else
 	{
-		cairo_rel_line_to(outline, c.x, c.y);
-		cairo_rel_line_to(outline, forward.x - x * length, forward.y - y * length);
+		double X, Y;
+		cairo_get_current_point(paintbox->top(), &X, &Y);
+
+		cairo_move_to(paintbox->bottom(), X, Y);
+		cairo_rel_line_to(paintbox->bottom(), c.x, c.y);
+		cairo_rel_line_to(paintbox->bottom(), forward.x - x * length, forward.y - y * length);
+	}
+
+	return c;
+}
+
+Coordinates WallSketcher::tracebackP(Coordinates forward, PieceList::iterator piece, PieceList::iterator passed)
+{
+	Coordinates c = {y * (width - 2), -x * (width - 2)};
+
+	cairo_rel_line_to(paintbox->middle(), x * length, y * length);
+
+	if (++piece != passed)
+	{
+		Coordinates backward = (*piece)->tracebackP(c, piece, passed);
+		cairo_rel_line_to(paintbox->middle(), forward.x - backward.x - x * length, forward.y - backward.y - y * length);
+	}
+	else
+	{
+		cairo_rel_line_to(paintbox->middle(), c.x, c.y);
+		cairo_rel_line_to(paintbox->middle(), forward.x - x * length, forward.y - y * length);
 	}
 
 	return c;

@@ -12,6 +12,7 @@ class Sketcher;
 class Alignment;
 class PaintBox;
 class BoundingBox;
+class Merger;
 
 struct Coordinates
 {
@@ -55,6 +56,7 @@ public:
 	const string &name();
 };
 
+
 class PaintBox
 {
 public:
@@ -67,6 +69,8 @@ public:
 	virtual void done() = 0;
 	virtual void maskback(Sketcher *s) = 0;
 	virtual void stamp(Alignment *a) = 0;
+	virtual void stamp(const string &name, Coordinates c) = 0;
+	virtual bool absorb(Merger *m) = 0;
 
 	virtual cairo_t *top() = 0;
 	virtual cairo_t *middle() = 0;
@@ -93,40 +97,64 @@ public:
 
 	 virtual void maskback(Sketcher *s);
 	 virtual void stamp(Alignment *a);
+	 virtual void stamp(const string &name, Coordinates c);
+	 virtual bool absorb(Merger *m);
 
 	 virtual cairo_t *top();
 	 virtual cairo_t *middle();
 	 virtual cairo_t *bottom();
 };
 
-class Outliner : public PaintBox
+class Merger : public PaintBox
 {
-private:
-	SegmentList segments;
-	bool segmentAdded;
-	Segment *openSegment;
-	AlignmentMap stamps;
+protected:
+	cairo_surface_t *topSurface;
 
 	cairo_t *floatingTop;
 	cairo_t *floatingMiddle;
 	cairo_t *floatingBottom;
 
-	cairo_surface_t *topSurface;
+	Coordinates curPos;
+
+	AlignmentMap stamps;
+
+public:
+	Merger(bool initOnlyTop = false);
+	virtual ~Merger();
+
+	virtual void move(double, double);
+	virtual const Coordinates &getPosition();
+	virtual bool transfer(PaintBox *pb, const string anchor = "", Coordinates *where = NULL);
+
+	virtual void done();
+	virtual void maskback(Sketcher *s);
+	virtual void stamp(Alignment *a);
+	virtual void stamp(const string &name, Coordinates c);
+	virtual bool absorb(Merger *m);
+
+	virtual cairo_t *top();
+	virtual cairo_t *middle();
+	virtual cairo_t *bottom();
+};
+
+class Outliner : public Merger
+{
+private:
+	SegmentList segments;
+	bool segmentAdded;
+	Segment *openSegment;
+
 	cairo_surface_t *middleSurface;
 	cairo_surface_t *bottomSurface;
-
-	Coordinates curPos;
 
 public:
 	Outliner();
 	virtual ~Outliner();
 
-	virtual void move(double, double);
-	virtual const Coordinates &getPosition();
+	virtual bool transfer(PaintBox *pb, const string anchor = "", Coordinates *where = NULL);
 
 	virtual void done();
 	virtual void maskback(Sketcher *s);
-	virtual void stamp(Alignment *a);
 
 	virtual cairo_t *top();
 	virtual cairo_t *middle();

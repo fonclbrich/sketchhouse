@@ -9,6 +9,8 @@
 #include "housesketcher.h"
 #include "roomsketcher.h"
 #include <iostream>
+#include "output.h"
+#include <cairo-ps.h>
 
 using namespace std;
 
@@ -16,12 +18,22 @@ HouseSketcher::HouseSketcher(PaintBox *pb)
 	: DelegateSketcher(pb)
 {
 	addDelegate("room", (Delegate) &HouseSketcher::doRoom);
-	addDelegate("connect", (Delegate) &HouseSketcher::doConnect);
+	addDelegate("path", (Delegate) &HouseSketcher::doPath);
 }
 
 HouseSketcher::~HouseSketcher()
 {
+	while (!roomSketches.empty())
+	{
+		delete *roomSketches.begin();
+		roomSketches.pop_front();
+	}
 
+	while (!paths.empty())
+	{
+		delete *paths.begin();
+		paths.pop_front();
+	}
 }
 
 void HouseSketcher::sketch(xmlNode *node)
@@ -34,57 +46,48 @@ void HouseSketcher::sketch(xmlNode *node)
 
 void HouseSketcher::doRoom(xmlNode *node)
 {
-	/* SegmentList *wallSegments = new SegmentList;
-	wallCollection.push_back(wallSegments);
-
-	AlignmentMap *wallAlignments = new AlignmentMap;
-	stampCollection.push_back(wallAlignments); */
-
-	Outliner wallOutlines;
-	RoomSketcher room(&wallOutlines);
-
+	Outliner *wallOutlines = new Outliner;
+	RoomSketcher room(wallOutlines);
 
 	room.sketch(node);
-	cairo_show_page(wallOutlines.top());
+
+	roomSketches.push_back(wallOutlines);
 }
 
-void HouseSketcher::doConnect(xmlNode *node)
+void HouseSketcher::doPath(xmlNode *node)
 {
-	string input = (char *) xmlNodeGetContent(node);
+	Path *path = new Path();
+	path->sketch(node);
 
-	size_t comma = input.find_first_of(",");
-
-	string source = input.substr(1, comma - 1);
-	string target = input.substr(comma + 1);
-	cout << source << endl;
-	cout << target << endl;
-
-
+	paths.push_back(path);
 }
 
-void HouseSketcher::publish(cairo_t *cs)
+void HouseSketcher::publish()
 {
-/*	 SegmentCollection::iterator segmentList = wallCollection.begin();
 
-	 while(wallCollection.end() != segmentList)
-	 {
-		 SegmentList::iterator segment = (*segmentList)->begin();
+	Coordinates origin = {0,0};
 
-		 while ((*segmentList)->end() != segment)
-		 {
-			 Coordinates noChange = {0,0};
-			 PieceList::iterator firstPiece = (*segment)->pieces.begin();
+	PathList::iterator path = paths.begin();
 
-			 cairo_move_to(cs, (*segment)->x,(*segment)->y);
-			 (*firstPiece)->traceback(cs, noChange, firstPiece, (*segment)->pieces.end());
+//	house.stamp((**path).origin(), origin);
+//	house.stamp((**path).destination(), (**path).offset());
 
-			 cairo_close_path(cs);
-			 cairo_stroke_preserve(cs);
-			 cairo_fill(cs);
+	MergerList::iterator room = roomSketches.begin();
 
-			 segment++;
-		 }
-		 segmentList++;
-	 }
-	 */
+	while (roomSketches.end() != room)
+	{
+		PostScriptWriter staffan("roomDebug.ps", {1800, 1800});
+		cairo_translate(staffan.top(), 900, 900);
+		cairo_translate(staffan.middle(), 900, 900);
+		cairo_translate(staffan.bottom(), 900, 900);
+
+		(**room).transfer(&staffan);
+
+	//	(**room).transfer(&house);
+//		house.absorb(*room);
+		room++;
+	}
+
+
 }
+

@@ -9,24 +9,26 @@
 #define HOUSESKETCHER_H_
 
 
-#include "delegatesketcher.h"
-#include "segments.h"
+#include "pathsketcher.h"
+
+typedef std::list<Merger *> MergerList;
+typedef std::list<Path *> PathList;
 
 class HouseSketcher : public DelegateSketcher
 {
 private:
-	SegmentCollection wallCollection;
-	MapList stampCollection;
+	MergerList roomSketches;
+	PathList paths;
 
 	void doRoom(xmlNode *);
-	void doConnect(xmlNode *);
+	void doPath(xmlNode *);
 
 public:
 	HouseSketcher(PaintBox *pb);
 	~HouseSketcher();
 
 	virtual void sketch(xmlNode *node);
-	virtual void publish(cairo_t *cs);
+	virtual void publish();
 };
 
 

@@ -20,8 +20,8 @@ public:
 	virtual void sketch(xmlNode *node);
 	virtual void publish();
 
-	virtual Coordinates traceback(cairo_t *outline, Coordinates modify, PieceList::iterator piece, PieceList::iterator passed);
-
+	virtual Coordinates traceback(Coordinates modify, PieceList::iterator piece, PieceList::iterator passed);
+	virtual Coordinates tracebackP(Coordinates modify, PieceList::iterator piece, PieceList::iterator passed);
 };
 
 
