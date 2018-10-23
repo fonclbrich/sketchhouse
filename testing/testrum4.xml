@@ -7,15 +7,15 @@
 			<direction>east</direction>
 			<width>32</width>
 			<length>100</length>
-		</wall>
-
+		</wall>		
 		<wall>
 			<direction>south</direction>
 			<length>80</length>
 			<width>32</width>
 		</wall>
+		<align>sz01</align>
 
-		<window>
+<window>
 			<direction>south</direction>
 			<length>100</length>
 		</window>
@@ -69,74 +69,6 @@
 	</geometry>
 </room>
 
-<room>
-	<name>Wohnzimmer</name>
-	<geometry>
-		<wall>
-			<direction>east</direction>
-			<width>32</width>
-			<length>100</length>
-		</wall>
-
-		<wall>
-			<direction>south</direction>
-			<length>80</length>
-			<width>32</width>
-		</wall>
-
-		<window>
-			<direction>south</direction>
-			<length>100</length>
-		</window>
-
-		<wall>
-			<direction>south</direction>
-			<length>90</length>
-			<width>32</width>
-		</wall>
-		<align>wz01</align>
-		<wall>
-			<direction>west</direction>
-			<length>120</length>
-			<width>10</width>
-		</wall>
-
-		<window>
-			<direction>west</direction>
-			<length>80</length>
-		</window>
-
-		<wall>
-			<direction>west</direction>
-			<length>120</length>
-			<width>10</width>
-		</wall>
-
-		<window>
-			<direction>west</direction>
-			<length>80</length>
-		</window>
-
-		<wall>
-			<direction>west</direction>
-			<length>10</length>
-			<width>10</width>
-		</wall>
-
-		<wall>
-			<direction>north</direction>
-			<length>270</length>
-			<width>5</width>
-		</wall>
-
-		<wall>
-			<direction>east</direction>
-			<length>230</length>
-			<width>32</width>
-		</wall>
-
-	</geometry>
-</room>
 <path>
 	<origin>sz01</origin>
 	<destination>wz01</destination>

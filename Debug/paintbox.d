@@ -18,8 +18,9 @@ paintbox.d: ../paintbox.cc ../sketcher.h \
  /usr/include/libxml2/libxml/xmlmemory.h \
  /usr/include/libxml2/libxml/threads.h /usr/include/cairo/cairo.h \
  /usr/include/cairo/cairo-version.h /usr/include/cairo/cairo-features.h \
- /usr/include/cairo/cairo-deprecated.h ../segments.h \
- /usr/include/cairo/cairo-ps.h /usr/include/cairo/cairo.h
+ /usr/include/cairo/cairo-deprecated.h ../segments.h ../pathsketcher.h \
+ ../geometryobject.h ../delegatesketcher.h /usr/include/cairo/cairo-ps.h \
+ /usr/include/cairo/cairo.h
 
 ../sketcher.h:
 
@@ -74,6 +75,12 @@ paintbox.d: ../paintbox.cc ../sketcher.h \
 /usr/include/cairo/cairo-deprecated.h:
 
 ../segments.h:
+
+../pathsketcher.h:
+
+../geometryobject.h:
+
+../delegatesketcher.h:
 
 /usr/include/cairo/cairo-ps.h:
 

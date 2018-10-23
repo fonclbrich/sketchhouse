@@ -20,7 +20,7 @@
 
 int main(int argc, char **argv)
 {
-   /*
+
     LIBXML_TEST_VERSION
 
 	xmlDoc *doc = xmlReadFile(argv[1], NULL, 0);
@@ -31,11 +31,8 @@ int main(int argc, char **argv)
 
     xmlNode *root_element = xmlDocGetRootElement(doc);
 
-    //PostScriptWriter leif("plan.ps", {1800, 1800});
-    Merger leif;
-    cairo_translate(leif.top(), 900, 900);
-    cairo_translate(leif.middle(), 900, 900);
-    cairo_translate(leif.bottom(), 900, 900);
+    PostScriptWriter leif("plan.ps", {6000, 6000});
+    //Merger leif;
 
     HouseSketcher myHouse(&leif);
 
@@ -43,27 +40,16 @@ int main(int argc, char **argv)
 
     myHouse.publish();
 
+   /*  Outliner leif;
+
+    cairo_set_source_rgb(leif.middle(), 0, 0,1);
+    cairo_rectangle(leif.middle(), 0, 0, 100, 100);
+    cairo_fill(leif.middle()); */
 
 
     xmlFreeDoc(doc);
 
-    xmlCleanupParser(); */
-
-
-	Outliner house;
-	Merger lelle;
-	cairo_set_source_rgb(house.middle(), 1, 1, 0);
-	cairo_rectangle(house.middle(), 0, 0, 100, 100);
-	cairo_fill(house.middle());
-
-	house.transfer(&lelle);
-
-	PostScriptWriter staffan("room2Debug.ps", {1800, 1800});
-	cairo_translate(staffan.top(), 900, 900);
-	cairo_translate(staffan.middle(), 900, 900);
-	cairo_translate(staffan.bottom(), 900, 900);
-
-	lelle.transfer(&staffan);
+    xmlCleanupParser();
 
     return 0;
 }

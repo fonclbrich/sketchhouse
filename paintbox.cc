@@ -7,6 +7,7 @@
 
 
 #include "sketcher.h"
+#include "pathsketcher.h"
 #include <cairo-ps.h>
 
 PaintBox::PaintBox()
@@ -96,17 +97,21 @@ cairo_t *BoundingBox::bottom()
 	return fallback->bottom();
 }
 
-Outliner::Outliner()
- : Merger(true)
+Outliner::Outliner(double span)
+ : Merger(true, span)
 {
 	segmentAdded = false;
 	openSegment = NULL;
 
-	middleSurface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, NULL);
-	bottomSurface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, NULL);
+	cairo_rectangle_t ext = {0, 0, span, span};
+
+	middleSurface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
+	bottomSurface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
 
 	floatingMiddle = cairo_create(middleSurface);
 	floatingBottom = cairo_create(bottomSurface);
+	cairo_translate(floatingMiddle, span / 2, span / 2);
+	cairo_translate(floatingBottom, span / 2, span / 2);
 }
 
 Outliner::~Outliner()
@@ -118,17 +123,12 @@ Outliner::~Outliner()
 
 bool Outliner::transfer(PaintBox *dst, const string anchor, Coordinates *where)
 {
+	Coordinates c;
+
 	if (NULL == where)
 	{
-		cairo_set_source_surface(dst->bottom(), bottomSurface, 0, 0);
-		cairo_paint(dst->bottom());
-
-		cairo_set_source_surface(dst->middle(), middleSurface, 0, 0);
-		cairo_paint(dst->middle());
-
-		cairo_set_source_surface(dst->top(), topSurface, 0, 0);
-		cairo_paint(dst->top());
-		return true;
+		c.x = 0;
+		c.y = 0;
 	}
 	else
 	{
@@ -136,21 +136,33 @@ bool Outliner::transfer(PaintBox *dst, const string anchor, Coordinates *where)
 
 		if (stamps.end() != (keyPair = stamps.find(anchor)))
 		{
-		Coordinates c = (keyPair->second);
-
-		cairo_set_source_surface(dst->bottom(), bottomSurface, where->x - c.x, where->y - c.y);
-		cairo_paint(dst->bottom());
-
-		cairo_set_source_surface(dst->middle(), middleSurface, where->x - c.x, where->y - c.y);
-		cairo_paint(dst->middle());
-
-		cairo_set_source_surface(dst->top(), topSurface, where->x - c.x, where->y - c.y);
-		cairo_paint(dst->top());
-
-		return true;
+			c.x = where->x - keyPair->second.x;
+			c.y = where->y - keyPair->second.y;
+			stamps.erase(keyPair);
 		}
+		else return false;
 	}
-	return false;
+
+	while(!stamps.empty())
+	{
+		Coordinates d = c;
+		d.x += stamps.begin()->second.x;
+		d.y += stamps.begin()->second.y;
+		dst->stamp(stamps.begin()->first, d);
+
+		stamps.erase(stamps.begin());
+	}
+
+	cairo_set_source_surface(dst->bottom(), bottomSurface, c.x, c.y);
+	cairo_paint(dst->bottom());
+
+	cairo_set_source_surface(dst->middle(), middleSurface, c.x, c.y);
+	cairo_paint(dst->middle());
+
+	cairo_set_source_surface(dst->top(), topSurface, c.x, c.y);
+	cairo_paint(dst->top());
+
+	return true;
 }
 
 void Outliner::done()
@@ -178,10 +190,14 @@ cairo_t *Outliner::bottom()
 	return floatingBottom;
 }
 
-Merger::Merger(bool initOnlyTop)
+Merger::Merger(bool initOnlyTop, double span)
 {
-	topSurface =  cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, NULL);
+	cairo_rectangle_t ext = {0, 0, span, span};
+	topSurface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
+
 	floatingTop = cairo_create(topSurface);
+
+	cairo_translate(floatingTop, span / 2, span / 2);
 
 	if (initOnlyTop)
 	{
@@ -215,6 +231,7 @@ bool Merger::transfer(PaintBox *dst, const string anchor, Coordinates *where)
 {
 	Coordinates c;
 
+
 	if (NULL == where)
 	{
 		c.x = 0;
@@ -232,6 +249,17 @@ bool Merger::transfer(PaintBox *dst, const string anchor, Coordinates *where)
 		}
 		else return false;
 	}
+
+	while(!stamps.empty())
+	{
+		Coordinates d = c;
+		d.x += stamps.begin()->second.x;
+		d.y += stamps.begin()->second.y;
+		dst->stamp(stamps.begin()->first, d);
+
+		stamps.erase(stamps.begin());
+	}
+
 	cairo_set_source_surface(dst->top(), topSurface, c.x, c.y);
 	cairo_paint(dst->top());
 
@@ -245,11 +273,21 @@ bool Merger::absorb(Merger *m)
 
 	while (stamps.end() != stamp)
 	{
-		m->transfer(this, stamp->first, &stamp->second);
+		if (m->transfer(this, stamp->first, &stamp->second))
+		{
+			cout << "Absorb successful" << endl;
+			AlignmentMap::iterator k = stamps.begin();
+			while (stamps.end() != k)
+			{
+				cout << k->first << endl << endl;
+				k++;
+			}
+			return true;
+		}
 		stamp++;
 	}
 
-	return true;
+	return false;
 }
 
 const Coordinates &Merger::getPosition()
@@ -276,6 +314,33 @@ void Merger::stamp(Alignment *a)
 void Merger::stamp(const string &name, Coordinates c)
 {
 	stamps.insert(make_pair(name, c));
+}
+
+bool Merger::connect(Path *p)
+{
+	AlignmentMap::iterator keyPair;
+
+	if (stamps.end() != (keyPair = stamps.find(p->origin())))
+	{
+		Coordinates c = keyPair->second;
+		c.x += p->offset().x;
+		c.y += p->offset().y;
+
+		stamp(p->destination(), c);
+		return true;
+	}
+
+	if (stamps.end() != (keyPair = stamps.find(p->destination())))
+	{
+		Coordinates c = keyPair->second;
+		c.x -= p->offset().x;
+		c.y -= p->offset().y;
+
+		stamp(p->origin(), c);
+		return true;
+	}
+
+	return false;
 }
 
 cairo_t *Merger::top()

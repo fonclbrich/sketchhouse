@@ -13,6 +13,7 @@ class Alignment;
 class PaintBox;
 class BoundingBox;
 class Merger;
+class Path;
 
 struct Coordinates
 {
@@ -119,7 +120,7 @@ protected:
 	AlignmentMap stamps;
 
 public:
-	Merger(bool initOnlyTop = false);
+	Merger(bool initOnlyTop = false, double span = 2000);
 	virtual ~Merger();
 
 	virtual void move(double, double);
@@ -130,6 +131,7 @@ public:
 	virtual void maskback(Sketcher *s);
 	virtual void stamp(Alignment *a);
 	virtual void stamp(const string &name, Coordinates c);
+	virtual bool connect(Path *p);
 	virtual bool absorb(Merger *m);
 
 	virtual cairo_t *top();
@@ -148,7 +150,7 @@ private:
 	cairo_surface_t *bottomSurface;
 
 public:
-	Outliner();
+	Outliner(double span = 2000);
 	virtual ~Outliner();
 
 	virtual bool transfer(PaintBox *pb, const string anchor = "", Coordinates *where = NULL);

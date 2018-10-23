@@ -10,14 +10,14 @@
 			<direction>south</direction>
 		</wall-->
 		<wall>
-			<width>16</width>
+			<width>W2</width>
 			<direction>west</direction>
 			<length>22.9</length>
 		</wall>
 		<wall>
 			<length>104</length>
 			<direction>north</direction>
-			<width>16</width>
+			<width>W3</width>
 		</wall>
 		<window>
 			<direction>north</direction>
@@ -25,13 +25,13 @@
 		</window>
 		<wall>
 			<direction>north</direction>
-			<width>16</width>
+			<width>W3</width>
 			<length>192</length>
 		</wall>
 		<align>fl02</align>
 		<wall>
 			<direction>east</direction>
-			<width>20</width>
+			<width>OUTOG</width>
 			<length>25.3</length>
 		</wall>
 		<window>
@@ -40,7 +40,7 @@
 		</window>
 		<wall>
 			<direction>east</direction>
-			<width>20</width>
+			<width>OUTOG</width>
 			<length>18.5</length>
 		</wall>
 		<align>fl01</align>
@@ -70,7 +70,7 @@
 			<direction>south</direction>
 		</wall>
 		<wall>
-			<width>16</width>
+			<width>W2</width>
 			<length>6.1</length>
 			<direction>west</direction>
 		</wall>
@@ -87,13 +87,13 @@
 	<geometry>
 		<wall>
 			<direction>east</direction>
-			<width>20</width>
+			<width>OUTOG</width>
 			<length>199.1</length>
 		</wall>
 
 		<wall>
 			<direction>south</direction>
-			<width>20</width>
+			<width>OUTOG</width>
 			<length>116.6</length>
 		</wall>
 
@@ -105,13 +105,13 @@
 		<wall>
 			<direction>south</direction>
 			<length>170.2</length>
-			<width>20</width>
+			<width>OUTOG</width>
 		</wall>
 
 		<wall>
 			<direction>west</direction>
 			<length>313</length>
-			<width>16</width>
+			<width>W2</width>
 		</wall>
 
 		<wall>
@@ -135,7 +135,7 @@
 		<wall>
 			<direction>west</direction>
 			<length>29.5</length>
-			<width>16</width>
+			<width>W2</width>
 		</wall>
 
 		<window>
@@ -146,7 +146,7 @@
 		<wall>
 			<direction>west</direction>
 			<length>6.2</length>
-			<width>16</width>
+			<width>W2</width>
 		</wall>
 		
 		<wall>
@@ -160,7 +160,7 @@
 		<wall>
 			<direction>east</direction>
 			<length>183.7</length>
-			<width>20</width>
+			<width>OUTOG</width>
 		</wall>
 
 		<window>
@@ -176,17 +176,17 @@
 		<wall>
 			<direction>north</direction>
 			<length>129</length>
-			<width>20</width>
+			<width>OUTOG</width>
 		</wall>
 		<wall>
 			<direction>east</direction>
 			<length>350.5</length>
-			<width>20</width>
+			<width>OUTOG</width>
 		</wall>
 		<align>bz01</align>
 		<wall>
 			<direction>south</direction>
-			<width>16</width>
+			<width>W3</width>
 			<length>192</length>
 		</wall>
 		<window>
@@ -196,7 +196,7 @@
 		<wall>
 			<direction>south</direction>
 			<length>73.3</length>
-			<width>16</width>
+			<width>W3</width>
 		</wall>
 		<wall>
 			<direction>west</direction>
@@ -210,12 +210,12 @@
 		</wall>
 		<wall>
 			<direction>west</direction>
-			<width>16</width>
+			<width>W2</width>
 			<length>320.8</length>
 		</wall>
 		<wall>
 			<direction>north</direction>
-			<width>20</width>
+			<width>OUTOG</width>
 			<length>108.3</length>
 		</wall>
 		<window>
@@ -231,13 +231,13 @@
 
 		<wall>
 			<direction>south</direction>
-			<width>32</width>
+			<width>OUTEG</width>
 			<length>391.9</length>
 		</wall>
 		<wall>
 			<direction>west</direction>
 			<length>153.7</length>
-			<width>20</width>
+			<width>OUTOG</width>
 		</wall>
 		<align>ez01</align>
 	</geometry>
@@ -253,12 +253,12 @@
 	<origin>fl02</origin>
 	<destination>bz01</destination>
 	<direction>west</direction>
-	<length>16</length>
+	<length>W3</length>
 </path>
 <path>
 	<origin>fl01</origin>
 	<destination>ez01</destination>
 	<direction>north</direction>
-	<length>20</length>
+	<length>OUTOG</length>
 </path>
 </house>

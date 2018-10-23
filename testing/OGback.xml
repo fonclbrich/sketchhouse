@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<house>
+<room>
+	<name>Flur</name>
+	<geometry>
+		<wall>
+			<direction>east</direction>
+			<width>OUTOG</width>
+			<length>18.5</length>
+		</wall>
+		<align>fl01</align>
+		<wall>
+			<direction>south</direction>
+			<width>16</width>
+			<length>170.1</length>
+		</wall>	
+	</geometry>
+</room>
+
+
+<room>
+	<name>Schlafzimmer</name>
+	<geometry>
+		<wall>
+			<direction>east</direction>
+			<width>OUTOG</width>
+			<length>199.1</length>
+		</wall>
+
+		<wall>
+			<direction>south</direction>
+			<width>OUTOG</width>
+			<length>116.6</length>
+		</wall>
+
+		<window>
+			<direction>south</direction>
+			<length>95.6</length>
+		</window>
+
+		<wall>
+			<direction>south</direction>
+			<length>170.2</length>
+			<width>OUTOG</width>
+		</wall>
+
+		<wall>
+			<direction>west</direction>
+			<length>313</length>
+			<width>W2</width>
+		</wall>
+
+		<wall>
+			<direction>north</direction>
+			<length>31</length>
+			<width>8</width>
+		</wall>
+
+		<wall>
+			<direction>west</direction>
+			<length>48.5</length>
+			<width>8</width>
+		</wall>
+
+		<wall>
+			<direction>south</direction>
+			<length>31</length>
+			<width>8</width>
+		</wall>
+
+		<wall>
+			<direction>west</direction>
+			<length>29.5</length>
+			<width>W2</width>
+		</wall>
+
+		<window>
+			<direction>west</direction>
+			<length>82</length>
+		</window>
+
+		<wall>
+			<direction>west</direction>
+			<length>6.2</length>
+			<width>W2</width>
+		</wall>
+		
+		<wall>
+			<direction>north</direction>
+			<length>384</length>
+			<width>16</width>
+		</wall>
+
+		<align>sz01</align>
+		
+		<wall>
+			<direction>east</direction>
+			<length>183.7</length>
+			<width>OUTOG</width>
+		</wall>
+
+		<window>
+			<direction>east</direction>
+			<length>95.7</length>
+		</window>		
+	</geometry>
+</room>
+
+
+
+<path>
+	<origin>fl01</origin>
+	<destination>fl01</destination>
+	<direction>west</direction>
+	<length>16</length>
+</path>
+
+</house>

@@ -65,29 +65,59 @@ void HouseSketcher::doPath(xmlNode *node)
 void HouseSketcher::publish()
 {
 
+	Outliner house;
+	cairo_identity_matrix(house.top());
+	cairo_identity_matrix(house.middle());
+	cairo_identity_matrix(house.bottom());
+
 	Coordinates origin = {0,0};
+
+	if (paths.empty())
+	{
+		// Handle empty
+	}
 
 	PathList::iterator path = paths.begin();
 
-//	house.stamp((**path).origin(), origin);
-//	house.stamp((**path).destination(), (**path).offset());
+	house.stamp((**path).origin(), origin);
+	house.stamp((**path).destination(), (**path).offset());
 
-	MergerList::iterator room = roomSketches.begin();
+	paths.pop_front();
 
-	while (roomSketches.end() != room)
+	bool didSomething = true;
+
+	while (!roomSketches.empty() && didSomething)
 	{
-		PostScriptWriter staffan("roomDebug.ps", {1800, 1800});
-		cairo_translate(staffan.top(), 900, 900);
-		cairo_translate(staffan.middle(), 900, 900);
-		cairo_translate(staffan.bottom(), 900, 900);
+		didSomething = false;
+		MergerList::iterator room = roomSketches.begin();
 
-		(**room).transfer(&staffan);
+		while (roomSketches.end() != room)
+		{
+			if (house.absorb(*room))
+			{
+				delete *room;
+				roomSketches.erase(room);
+				didSomething = true;
+				break;
+			}
+			room++;
+		}
 
-	//	(**room).transfer(&house);
-//		house.absorb(*room);
-		room++;
+		path = paths.begin();
+
+		while (paths.end() != path)
+		{
+			if (house.connect(*path))
+			{
+				delete *path;
+				paths.erase(path);
+				didSomething = true;
+				break;
+			}
+			path++;
+		}
 	}
 
-
+	house.transfer(paintbox);
 }
 
