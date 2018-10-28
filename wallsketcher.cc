@@ -30,7 +30,7 @@ void WallSketcher::publish()
 
 Coordinates WallSketcher::traceback(Coordinates forward, PieceList::iterator piece, PieceList::iterator passed)
 {
-	Coordinates c = {y * width, -x * width};
+	Coordinates c(y * width, -x * width);
 
 	cairo_rel_line_to(paintbox->top(), x * length, y * length);
 
@@ -54,7 +54,7 @@ Coordinates WallSketcher::traceback(Coordinates forward, PieceList::iterator pie
 
 Coordinates WallSketcher::tracebackP(Coordinates forward, PieceList::iterator piece, PieceList::iterator passed)
 {
-	Coordinates c = {y * (width - 2), -x * (width - 2)};
+	Coordinates c(y * (width - 2), -x * (width - 2));
 
 	cairo_rel_line_to(paintbox->middle(), x * length, y * length);
 

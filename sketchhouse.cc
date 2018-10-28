@@ -12,6 +12,8 @@
 #include <libxml/parser.h>
 #include <iostream>
 #include <cairo-ps.h>
+#include <string>
+#include <iostream>
 
 #include "housesketcher.h"
 #include "output.h"
@@ -20,7 +22,6 @@
 
 int main(int argc, char **argv)
 {
-
     LIBXML_TEST_VERSION
 
 	xmlDoc *doc = xmlReadFile(argv[1], NULL, 0);

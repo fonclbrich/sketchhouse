@@ -5,10 +5,15 @@
  *      Author: erik
  */
 
-
 #include "sketcher.h"
 #include "pathsketcher.h"
 #include <cairo-ps.h>
+
+Coordinates::Coordinates(double nx, double ny)
+{
+	x = nx;
+	y = ny;
+}
 
 PaintBox::PaintBox()
 {
@@ -25,9 +30,13 @@ BoundingBox::BoundingBox(PaintBox *fb)
 {
 	fallback = fb;
 
-	boundingBox = cairo_ps_surface_create("debug.ps", 400, 400);
+	// boundingBox = cairo_ps_surface_create("debug.ps", 2000, 2000);
+	cairo_rectangle_t ext = {0, 0, 2000, 2000};
+
+	boundingBox = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
 	bc = cairo_create(boundingBox);
 
+	cairo_translate(bc, 1000, 1000);
 	cairo_set_source_rgb(bc, 0, 0, 0);
 	cairo_set_line_width(bc, 1);
 
@@ -193,6 +202,7 @@ cairo_t *Outliner::bottom()
 Merger::Merger(bool initOnlyTop, double span)
 {
 	cairo_rectangle_t ext = {0, 0, span, span};
+
 	topSurface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
 
 	floatingTop = cairo_create(topSurface);
@@ -279,7 +289,7 @@ bool Merger::absorb(Merger *m)
 			AlignmentMap::iterator k = stamps.begin();
 			while (stamps.end() != k)
 			{
-				cout << k->first << endl << endl;
+				cout << k->first << " : " << k->second.x << " , " << k->second.y << endl << endl;
 				k++;
 			}
 			return true;

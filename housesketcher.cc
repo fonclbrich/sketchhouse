@@ -70,7 +70,7 @@ void HouseSketcher::publish()
 	cairo_identity_matrix(house.middle());
 	cairo_identity_matrix(house.bottom());
 
-	Coordinates origin = {0,0};
+	Coordinates origin;
 
 	if (paths.empty())
 	{

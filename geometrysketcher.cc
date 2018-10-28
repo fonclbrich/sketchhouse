@@ -20,7 +20,7 @@ void GeometrySketcher::prologue()
 		cairo_move_to(paintbox->top(), wallStart.x, wallStart.y);
 		cairo_move_to(paintbox->middle(), wallStart.x, wallStart.y);
 
-		Coordinates noChange = {0,0};
+		Coordinates noChange;
 		(**wallPieces.begin()).traceback(noChange, wallPieces.begin(), wallPieces.end());
 		(**wallPieces.begin()).tracebackP(noChange, wallPieces.begin(), wallPieces.end());
 		(**wallPieces.begin()).publish();
@@ -42,7 +42,7 @@ void GeometrySketcher::prologue()
 GeometrySketcher::GeometrySketcher(PaintBox *pb)
 	: DelegateSketcher(pb)
 {
-	bb = new BoundingBox(pb);
+	 bb = new BoundingBox(pb);
 
 	addDelegate("wall", (Delegate) &GeometrySketcher::doWall);
 	addDelegate("window", (Delegate) &GeometrySketcher::doWindow);

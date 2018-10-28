@@ -15,10 +15,13 @@ class BoundingBox;
 class Merger;
 class Path;
 
-struct Coordinates
+class Coordinates
 {
+public:
 	double x;
 	double y;
+
+	Coordinates(double nx = 0, double ny = 0);
 };
 
 #include <list>

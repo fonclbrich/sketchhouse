@@ -2,83 +2,111 @@
 <house>
 
 <room>
-	<name>Flur</name>
+	<name>Eingang</name>
 	<geometry>
-		<!--wall>
-			<width>16</width>
-			<length>129.3</length>
-			<direction>south</direction>
-		</wall-->
 		<wall>
-			<width>W2</width>
-			<direction>west</direction>
-			<length>22.9</length>
-		</wall>
-		<wall>
-			<length>104</length>
 			<direction>north</direction>
-			<width>W3</width>
+			<length>20.8</length>
+			<width>16</width>
+		</wall>
+		<align>eg01</align>
+		<wall>
+			<direction>east</direction>
+			<length>22.7</length>
+			<width>16</width>
 		</wall>
 		<window>
-			<direction>north</direction>
-			<length>88</length>
+			<direction>east</direction>
+			<length>81.9</length>
 		</window>
 		<wall>
-			<direction>north</direction>
-			<width>W3</width>
-			<length>192</length>
+			<direction>east</direction>
+			<length>28.5</length>
+			<width>16</width>
 		</wall>
 		<align>fl02</align>
-		<wall>
-			<direction>east</direction>
-			<width>OUTOG</width>
-			<length>25.3</length>
-		</wall>
 		<window>
 			<direction>east</direction>
-			<length>66.9</length>
+			<length>82</length>
 		</window>
 		<wall>
 			<direction>east</direction>
+			<length>9.5</length>
+			<width>16</width>
+		</wall>
+		<align>fl03</align>
+	</geometry>
+</room>	
+
+<room>
+	<name>Kueche</name>
+	<geometry>
+		<wall>
+			<direction>north</direction>
+			<length>138.6</length>
 			<width>OUTOG</width>
-			<length>18.5</length>
+		</wall>
+		<wall>
+			<direction>east</direction>
+			<length>359.9</length>
+			<width>16</width>
+		</wall>
+		<align>ku01</align>
+		<wall>
+			<direction>south</direction>
+			<length>20.8</length>
+			<width>16</width>
+		</wall>
+		<window>
+			<direction>south</direction>
+			<length>82</length>
+		</window>
+		<wall>
+			<direction>south</direction>
+			<length>268</length>
+			<width>16</width>
+		</wall>
+		<wall>
+			<direction>west</direction>
+			<length>148</length>
+			<width>16</width>
+		</wall>
+		<align>ku02</align>
+		<window>
+			<direction>west</direction>
+			<length>84</length>
+		</window>
+		<wall>
+			<direction>west</direction>
+			<length>130</length>
+			<width>16</width>
+		</wall>			
+		<wall>
+			<direction>north</direction>
+			<length>82.8</length>
+			<width>OUTOG</width>
+		</wall>	
+		<window>
+			<direction>north</direction>
+			<length>145.2</length>
+		</window>		
+	</geometry>
+</room>
+
+<room>
+	<name>Flur</name>
+	<geometry>
+		<wall>
+			<direction>west</direction>
+			<length>22.7</length>
+			<width>16</width>
 		</wall>
 		<align>fl01</align>
 		<wall>
-			<direction>south</direction>
+			<direction>north</direction>
+			<length>104</length>
 			<width>16</width>
-			<length>170.9</length>
 		</wall>
-		<wall>
-			<direction>east</direction>
-			<width>5</width>
-			<length>8</length>
-		</wall>
-		<wall>
-			<direction>south</direction>
-			<width>8</width>
-			<length>83.8</length>
-		</wall>
-		<wall>
-			<direction>west</direction>
-			<width>5</width>
-			<length>8</length>
-		</wall>
-		<wall>
-			<width>16</width>
-			<length>129.3</length>
-			<direction>south</direction>
-		</wall>
-		<wall>
-			<width>W2</width>
-			<length>6.1</length>
-			<direction>west</direction>
-		</wall>
-		<window>
-			<direction>west</direction>
-			<length>81.9</length>
-		</window>
-		
 	</geometry>
 </room>
 
@@ -86,179 +114,72 @@
 	<name>Schlafzimmer</name>
 	<geometry>
 		<wall>
-			<direction>east</direction>
-			<width>OUTOG</width>
-			<length>199.1</length>
-		</wall>
-
-		<wall>
-			<direction>south</direction>
-			<width>OUTOG</width>
-			<length>116.6</length>
-		</wall>
-
-		<window>
-			<direction>south</direction>
-			<length>95.6</length>
-		</window>
-
-		<wall>
-			<direction>south</direction>
-			<length>170.2</length>
-			<width>OUTOG</width>
-		</wall>
-
-		<wall>
-			<direction>west</direction>
-			<length>313</length>
-			<width>W2</width>
-		</wall>
-
-		<wall>
-			<direction>north</direction>
-			<length>31</length>
-			<width>8</width>
-		</wall>
-
-		<wall>
-			<direction>west</direction>
-			<length>48.5</length>
-			<width>8</width>
-		</wall>
-
-		<wall>
-			<direction>south</direction>
-			<length>31</length>
-			<width>8</width>
-		</wall>
-
-		<wall>
-			<direction>west</direction>
-			<length>29.5</length>
-			<width>W2</width>
-		</wall>
-
-		<window>
-			<direction>west</direction>
-			<length>82</length>
-		</window>
-
-		<wall>
 			<direction>west</direction>
 			<length>6.2</length>
-			<width>W2</width>
+			<width>16</width>
 		</wall>
-		
+		<align>sz01</align>
 		<wall>
 			<direction>north</direction>
 			<length>384</length>
 			<width>5</width>
 		</wall>
-
-		<align>sz01</align>
-		
-		<wall>
-			<direction>east</direction>
-			<length>183.7</length>
-			<width>OUTOG</width>
-		</wall>
-
-		<window>
-			<direction>east</direction>
-			<length>95.7</length>
-		</window>	
-	</geometry>
-</room>
-
-<room>
-	<name>Badezimmer</name>
-	<geometry>
-		<wall>
-			<direction>north</direction>
-			<length>129</length>
-			<width>OUTOG</width>
-		</wall>
-		<wall>
-			<direction>east</direction>
-			<length>350.5</length>
-			<width>OUTOG</width>
-		</wall>
-		<align>bz01</align>
-		<wall>
-			<direction>south</direction>
-			<width>W3</width>
-			<length>192</length>
-		</wall>
-		<window>
-			<direction>south</direction>
-			<length>86.3</length>
-		</window>
-		<wall>
-			<direction>south</direction>
-			<length>73.3</length>
-			<width>W3</width>
-		</wall>
-		<wall>
-			<direction>west</direction>
-			<width>10</width>
-			<length>31.4</length>
-		</wall>
-		<wall>
-			<direction>south</direction>
-			<width>10</width>
-			<length>33.9</length>
-		</wall>
-		<wall>
-			<direction>west</direction>
-			<width>W2</width>
-			<length>320.8</length>
-		</wall>
-		<wall>
-			<direction>north</direction>
-			<width>OUTOG</width>
-			<length>108.3</length>
-		</wall>
-		<window>
-			<direction>north</direction>
-			<length>145.3</length>
-		</window>
+		<align>sz02</align>
 	</geometry>
 </room>
 
 <room>
 	<name>Esszimmer</name>
 	<geometry>
-
-		<wall>
-			<direction>south</direction>
-			<width>OUTEG</width>
-			<length>391.9</length>
-		</wall>
 		<wall>
 			<direction>west</direction>
-			<length>153.7</length>
+			<length>172.2</length>
 			<width>OUTOG</width>
 		</wall>
-		<align>ez01</align>
+		<align>ez01</align>		
 	</geometry>
-</room>	
+</room>
+
+<room>
+	<name>Kinderzimmer</name>
+	<geometry>
+		<wall>
+			<direction>north</direction>
+			<length>20.3</length>
+			<width>16</width>
+		</wall>
+		<align>kz01</align>		
+	</geometry>
+</room>
 
 <path>
-	<origin>sz01</origin>
-	<destination>fl01</destination>
+	<origin>eg01</origin>
+	<destination>ku01</destination>
 	<direction>west</direction>
 	<length>16</length>
 </path>
 <path>
-	<origin>fl02</origin>
-	<destination>bz01</destination>
-	<direction>west</direction>
-	<length>W3</length>
+	<origin>eg01</origin>
+	<destination>fl01</destination>
+	<direction>north</direction>
+	<length>16</length>
 </path>
 <path>
-	<origin>fl01</origin>
+	<origin>fl02</origin>
+	<destination>sz01</destination>
+	<direction>north</direction>
+	<length>16</length>
+</path>
+<path>
+	<origin>sz02</origin>
 	<destination>ez01</destination>
 	<direction>north</direction>
 	<length>OUTOG</length>
+</path>
+<path>
+	<origin>fl03</origin>
+	<destination>kz01</destination>
+	<direction>east</direction>
+	<length>16</length>
 </path>
 </house>
