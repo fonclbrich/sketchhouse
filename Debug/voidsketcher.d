@@ -1,6 +1,5 @@
-geometrysketcher.d: ../geometrysketcher.cc ../geometrysketcher.h \
- ../wallsketcher.h ../geometryobject.h ../delegatesketcher.h \
- ../sketcher.h /usr/include/libxml2/libxml/parser.h \
+voidsketcher.d: ../voidsketcher.cc ../voidsketcher.h ../geometryobject.h \
+ ../delegatesketcher.h ../sketcher.h /usr/include/libxml2/libxml/parser.h \
  /usr/include/libxml2/libxml/xmlversion.h \
  /usr/include/libxml2/libxml/xmlexports.h \
  /usr/include/libxml2/libxml/tree.h \
@@ -19,12 +18,9 @@ geometrysketcher.d: ../geometrysketcher.cc ../geometrysketcher.h \
  /usr/include/libxml2/libxml/xmlmemory.h \
  /usr/include/libxml2/libxml/threads.h /usr/include/cairo/cairo.h \
  /usr/include/cairo/cairo-version.h /usr/include/cairo/cairo-features.h \
- /usr/include/cairo/cairo-deprecated.h ../segments.h ../windowsketcher.h \
- ../voidsketcher.h
+ /usr/include/cairo/cairo-deprecated.h ../segments.h
 
-../geometrysketcher.h:
-
-../wallsketcher.h:
+../voidsketcher.h:
 
 ../geometryobject.h:
 
@@ -83,7 +79,3 @@ geometrysketcher.d: ../geometrysketcher.cc ../geometrysketcher.h \
 /usr/include/cairo/cairo-deprecated.h:
 
 ../segments.h:
-
-../windowsketcher.h:
-
-../voidsketcher.h:

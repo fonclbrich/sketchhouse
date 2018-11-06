@@ -30,7 +30,6 @@ public:
 	virtual const Coordinates &getPosition();
 
 	virtual void done();
-	virtual void maskback(Sketcher *s);
 	virtual void stamp(Alignment *a);
 	virtual void stamp(const string &name, Coordinates c);
 	virtual bool absorb(Merger *m);

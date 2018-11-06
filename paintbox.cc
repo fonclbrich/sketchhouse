@@ -9,10 +9,34 @@
 #include "pathsketcher.h"
 #include <cairo-ps.h>
 
+cairo_rectangle_t PaintBox::ext = {0, 0, 2000, 2000};
+
 Coordinates::Coordinates(double nx, double ny)
 {
 	x = nx;
 	y = ny;
+}
+
+double RGBColor::blue()
+{
+	return b;
+}
+
+double RGBColor::green()
+{
+	return g;
+}
+
+double RGBColor::red()
+{
+	return r;
+}
+
+RGBColor::RGBColor(unsigned char R, unsigned char G, unsigned char B)
+{
+	r = R / 255.;
+	g = G / 255.;
+	b = B / 255.;
 }
 
 PaintBox::PaintBox()
@@ -25,13 +49,114 @@ PaintBox::~PaintBox()
 
 }
 
+InterceptorPainter::InterceptorPainter(PaintBox *fb,  bool tt, bool tm, bool tb)
+{
+	fallback = fb;
+
+	if (tt)
+	{
+		intTop = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
+		it = cairo_create(intTop);
+	}
+	else
+	{
+		intTop = NULL;
+		it = NULL;
+	}
+
+	if (tm)
+	{
+		intMid = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
+		im = cairo_create(intTop);
+	}
+	else
+	{
+		intMid = NULL;
+		im = NULL;
+	}
+
+	if (tt)
+	{
+		intBot = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
+		ib = cairo_create(intTop);
+	}
+	else
+	{
+		intBot = NULL;
+		ib = NULL;
+	}
+}
+InterceptorPainter::~InterceptorPainter()
+{
+	if (NULL != it)
+	{
+		cairo_destroy(it);
+		cairo_surface_destroy(intTop);
+	}
+
+	if (NULL != im)
+	{
+		cairo_destroy(im);
+		cairo_surface_destroy(intMid);
+	}
+
+	if (NULL != ib)
+	{
+		cairo_destroy(ib);
+		cairo_surface_destroy(intBot);
+	}
+}
+
+
+void InterceptorPainter::move(double x, double y)
+{
+	fallback->move(x, y);
+}
+
+const Coordinates &InterceptorPainter::getPosition()
+{
+	return fallback->getPosition();
+}
+
+
+void InterceptorPainter::done()
+{
+}
+
+void InterceptorPainter::stamp(Alignment *a)
+{
+	fallback->stamp(a);
+}
+
+void InterceptorPainter::stamp(const string &name, Coordinates c)
+{
+	fallback->stamp(name, c);
+}
+
+bool InterceptorPainter::absorb(Merger *m)
+{
+	return fallback->absorb(m);
+}
+
+cairo_t *InterceptorPainter::top()
+{
+	return it == 0 ? fallback->top() : it;
+}
+
+cairo_t *InterceptorPainter::middle()
+{
+	return im == 0 ? fallback->middle() : im;
+}
+
+cairo_t *InterceptorPainter::bottom()
+{
+	return ib == 0 ? fallback->bottom() : ib;
+}
+
 BoundingBox::BoundingBox(PaintBox *fb)
  : PaintBox()
 {
 	fallback = fb;
-
-	// boundingBox = cairo_ps_surface_create("debug.ps", 2000, 2000);
-	cairo_rectangle_t ext = {0, 0, 2000, 2000};
 
 	boundingBox = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
 	bc = cairo_create(boundingBox);
@@ -68,10 +193,12 @@ void BoundingBox::done()
 	cairo_stroke_preserve(bc);
 	cairo_fill(bc);
 
-	cairo_surface_show_page(boundingBox);
+	cairo_identity_matrix(fallback->top());
+	cairo_set_source_surface(fallback->top(), boundingBox, 0, 0);
+	cairo_paint(fallback->top());
 }
 
-void BoundingBox::maskback(Sketcher *s)
+void BoundingBox::maskback(PaintBox *src)
 {
 
 }
@@ -111,8 +238,6 @@ Outliner::Outliner(double span)
 {
 	segmentAdded = false;
 	openSegment = NULL;
-
-	cairo_rectangle_t ext = {0, 0, span, span};
 
 	middleSurface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
 	bottomSurface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
@@ -179,11 +304,6 @@ void Outliner::done()
 
 }
 
-void Outliner::maskback(Sketcher *s)
-{
-
-}
-
 cairo_t *Outliner::top()
 {
 	return floatingTop;
@@ -201,8 +321,6 @@ cairo_t *Outliner::bottom()
 
 Merger::Merger(bool initOnlyTop, double span)
 {
-	cairo_rectangle_t ext = {0, 0, span, span};
-
 	topSurface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, &ext);
 
 	floatingTop = cairo_create(topSurface);
@@ -306,11 +424,6 @@ const Coordinates &Merger::getPosition()
 }
 
 void Merger::done()
-{
-
-}
-
-void Merger::maskback(Sketcher *s)
 {
 
 }

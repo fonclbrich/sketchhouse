@@ -35,17 +35,16 @@ void PostScriptWriter::move(double dx, double dy)
 
 const Coordinates &PostScriptWriter::getPosition()
 {
-	if (NULL != fallback) return fallback->getPosition(); else return {0,0};
+	if (NULL != fallback)
+		return fallback->getPosition();
+
+	Coordinates origin;
+	return origin;
 }
 
 void PostScriptWriter::done()
 {
 	if (NULL != fallback) fallback->done();
-}
-
-void PostScriptWriter::maskback(Sketcher *s)
-{
-	if (NULL != fallback) fallback->maskback(s);
 }
 
 void PostScriptWriter::stamp(Alignment *a)

@@ -16,6 +16,7 @@ CC_SRCS += \
 ../segments.cc \
 ../sketcher.cc \
 ../sketchhouse.cc \
+../voidsketcher.cc \
 ../wallsketcher.cc \
 ../windowsketcher.cc 
 
@@ -32,6 +33,7 @@ CC_DEPS += \
 ./segments.d \
 ./sketcher.d \
 ./sketchhouse.d \
+./voidsketcher.d \
 ./wallsketcher.d \
 ./windowsketcher.d 
 
@@ -48,6 +50,7 @@ OBJS += \
 ./segments.o \
 ./sketcher.o \
 ./sketchhouse.o \
+./voidsketcher.o \
 ./wallsketcher.o \
 ./windowsketcher.o 
 

@@ -24,6 +24,19 @@ public:
 	Coordinates(double nx = 0, double ny = 0);
 };
 
+class RGBColor
+{
+private:
+	double r,g,b;
+
+public:
+	double blue();
+	double green();
+	double red();
+
+	RGBColor(unsigned char R, unsigned char G, unsigned char B);
+};
+
 #include <list>
 #include <map>
 #include <iostream>
@@ -63,6 +76,9 @@ public:
 
 class PaintBox
 {
+protected:
+	static cairo_rectangle_t ext;
+
 public:
 	PaintBox();
 	virtual ~PaintBox();
@@ -71,7 +87,6 @@ public:
 	virtual const Coordinates &getPosition() = 0;
 
 	virtual void done() = 0;
-	virtual void maskback(Sketcher *s) = 0;
 	virtual void stamp(Alignment *a) = 0;
 	virtual void stamp(const string &name, Coordinates c) = 0;
 	virtual bool absorb(Merger *m) = 0;
@@ -81,6 +96,35 @@ public:
 	virtual cairo_t *bottom() = 0;
 };
 
+class PlainBox : public PaintBox
+{
+
+};
+
+class InterceptorPainter : public PaintBox
+{
+	PaintBox *fallback;
+
+	cairo_surface_t *intTop, *intMid, *intBot;
+	cairo_t *it, *im, *ib;
+
+public:
+	InterceptorPainter(PaintBox *fb, bool tt = false, bool tm = false, bool tb = false);
+	virtual ~InterceptorPainter();
+
+	virtual void move(double, double);
+	virtual const Coordinates &getPosition();
+
+	virtual void done();
+
+	virtual void stamp(Alignment *a);
+	virtual void stamp(const string &name, Coordinates c);
+	virtual bool absorb(Merger *m);
+
+	virtual cairo_t *top();
+	virtual cairo_t *middle();
+	virtual cairo_t *bottom();
+};
 
 class BoundingBox : public PaintBox
 {
@@ -99,7 +143,7 @@ public:
 
 	 virtual void done();
 
-	 virtual void maskback(Sketcher *s);
+	 virtual void maskback(PaintBox *src);
 	 virtual void stamp(Alignment *a);
 	 virtual void stamp(const string &name, Coordinates c);
 	 virtual bool absorb(Merger *m);
@@ -131,7 +175,6 @@ public:
 	virtual bool transfer(PaintBox *pb, const string anchor = "", Coordinates *where = NULL);
 
 	virtual void done();
-	virtual void maskback(Sketcher *s);
 	virtual void stamp(Alignment *a);
 	virtual void stamp(const string &name, Coordinates c);
 	virtual bool connect(Path *p);
@@ -159,7 +202,6 @@ public:
 	virtual bool transfer(PaintBox *pb, const string anchor = "", Coordinates *where = NULL);
 
 	virtual void done();
-	virtual void maskback(Sketcher *s);
 
 	virtual cairo_t *top();
 	virtual cairo_t *middle();

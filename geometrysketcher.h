@@ -31,6 +31,8 @@ public:
 	void doWall(xmlNode *node);
 	void doWindow(xmlNode *node);
 	void doAlign(xmlNode *node);
+	void doDoor(xmlNode *node);
+	void doDoorway(xmlNode *node);
 
 	virtual void sketch(xmlNode *node);
 };

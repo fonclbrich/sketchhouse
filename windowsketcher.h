@@ -13,6 +13,12 @@
 
 class WindowSketcher : public GeometryObject
 {
+private:
+	double displacement;
+	double thickness;
+
+	RGBColor color;
+
 public:
 	WindowSketcher(PaintBox *pb);
 	virtual void sketch(xmlNode *node);

@@ -8,6 +8,7 @@
 #include "geometrysketcher.h"
 #include "wallsketcher.h"
 #include "windowsketcher.h"
+#include "voidsketcher.h"
 #include <iostream>
 
 void GeometrySketcher::prologue()
@@ -47,6 +48,7 @@ GeometrySketcher::GeometrySketcher(PaintBox *pb)
 	addDelegate("wall", (Delegate) &GeometrySketcher::doWall);
 	addDelegate("window", (Delegate) &GeometrySketcher::doWindow);
 	addDelegate("align", (Delegate) &GeometrySketcher::doAlign);
+	addDelegate("doorway", (Delegate) &GeometrySketcher::doDoorway);
 
 	didWall = false;
 
@@ -84,6 +86,17 @@ void GeometrySketcher::doAlign(xmlNode *node)
 	alignment->sketch(node);
 	paintbox->stamp(alignment);
 	didWall = true;
+}
+
+void GeometrySketcher::doDoor(xmlNode *node)
+{
+
+}
+
+void GeometrySketcher::doDoorway(xmlNode *node)
+{
+	VoidSketcher doorway(bb);
+	doorway.sketch(node);
 }
 
 void GeometrySketcher::sketch(xmlNode *node)
